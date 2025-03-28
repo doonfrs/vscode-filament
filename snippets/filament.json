@@ -1,0 +1,289 @@
+{
+  "Filament Input": {
+    "prefix": "x-filament::input",
+    "body": [
+      "<x-filament::input type=\"${1|text,email,password,number,tel,url|}\" wire:model=\"${2:model}\" id=\"${3:id}\"$4 />"
+    ],
+    "description": "Filament Input component"
+  },
+  "Filament Input with wrapper": {
+    "prefix": "x-filament::input.wrapper",
+    "body": [
+      "<x-filament::input.wrapper${1: :valid=\"${2:condition}\"}>",
+      "    $0",
+      "</x-filament::input.wrapper>"
+    ],
+    "description": "Filament Input wrapper component"
+  },
+  "Filament Input Label": {
+    "prefix": "x-filament::input.label",
+    "body": [
+      "<x-filament::input.label for=\"${1:id}\">${2:Label}</x-filament::input.label>"
+    ],
+    "description": "Filament Input Label component"
+  },
+  "Filament Textarea": {
+    "prefix": "x-filament::textarea",
+    "body": [
+      "<x-filament::textarea wire:model=\"${1:model}\" id=\"${2:id}\" rows=\"${3:3}\" />"
+    ],
+    "description": "Filament Textarea component"
+  },
+  "Filament Input Error": {
+    "prefix": "x-filament::input.error",
+    "body": [
+      "<x-filament::input.error>{{ \\$${1:message} }}</x-filament::input.error>"
+    ],
+    "description": "Filament Input Error component"
+  },
+  "Filament Button": {
+    "prefix": "x-filament::button",
+    "body": [
+      "<x-filament::button${1: color=\"${2|primary,danger,gray,info,success,warning|}\"} ${3:size=\"${4|xs,sm,md,lg,xl|}\"} ${5:icon=\"${6:heroicon-m-plus}\"} ${7:icon-position=\"${8|before,after|}\"}>",
+      "    ${9:Label}",
+      "</x-filament::button>"
+    ],
+    "description": "Filament Button component - Renders a clickable button for actions"
+  },
+  "Filament Card": {
+    "prefix": "x-filament::card",
+    "body": [
+      "<x-filament::card>",
+      "    $0",
+      "</x-filament::card>"
+    ],
+    "description": "Filament Card component"
+  },
+  "Filament Dropdown": {
+    "prefix": "x-filament::dropdown",
+    "body": [
+      "<x-filament::dropdown${1: placement=\"${2|bottom-start,bottom,bottom-end,top-start,top,top-end,right-start,right,right-end,left-start,left,left-end|}\"} ${3:width=\"${4|xs,sm,md,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl,screen-sm,screen-md,screen-lg,screen-xl,screen-2xl|}\"}>",
+      "    <x-slot name=\"trigger\">",
+      "        ${5:Trigger Content}",
+      "    </x-slot>",
+      "    ",
+      "    <x-filament::dropdown.list>",
+      "        <x-filament::dropdown.item wire:click=\"${6:action}\">",
+      "            ${7:Item Label}",
+      "        </x-filament::dropdown.item>",
+      "        $0",
+      "    </x-filament::dropdown.list>",
+      "</x-filament::dropdown>"
+    ],
+    "description": "Filament Dropdown component - Creates a toggleable dropdown menu"
+  },
+  "Filament Dropdown Item": {
+    "prefix": "x-filament::dropdown.item",
+    "body": [
+      "<x-filament::dropdown.item${1: icon=\"${2:heroicon-m-check}\"} wire:click=\"${3:action}\">",
+      "    ${4:Item Label}",
+      "</x-filament::dropdown.item>"
+    ],
+    "description": "Filament Dropdown Item - Individual item within a dropdown menu"
+  },
+  "Filament Dropdown List": {
+    "prefix": "x-filament::dropdown.list",
+    "body": [
+      "<x-filament::dropdown.list>",
+      "    $0",
+      "</x-filament::dropdown.list>"
+    ],
+    "description": "Filament Dropdown List - Container for dropdown items with consistent styling"
+  },
+  "Filament Form": {
+    "prefix": "x-filament::form",
+    "body": [
+      "<x-filament::form wire:submit=\"${1:submit}\">",
+      "    $0",
+      "</x-filament::form>"
+    ],
+    "description": "Filament Form component"
+  },
+  "Filament Select": {
+    "prefix": "x-filament::select",
+    "body": [
+      "<x-filament::select wire:model=\"${1:model}\" id=\"${2:id}\">",
+      "    <option value=\"\">Select an option</option>",
+      "    $0",
+      "</x-filament::select>"
+    ],
+    "description": "Filament Select component - Dropdown selection input"
+  },
+  "Filament Toggle": {
+    "prefix": "x-filament::toggle",
+    "body": [
+      "<x-filament::toggle wire:model=\"${1:model}\" />"
+    ],
+    "description": "Filament Toggle component"
+  },
+  "Filament Checkbox": {
+    "prefix": "x-filament::checkbox",
+    "body": [
+      "<x-filament::checkbox wire:model=\"${1:model}\" id=\"${2:id}\"${3: label=\"${4:Label}\"} />"
+    ],
+    "description": "Filament Checkbox component - Creates a checkbox input"
+  },
+  "Filament Radio": {
+    "prefix": "x-filament::radio",
+    "body": [
+      "<x-filament::radio wire:model=\"${1:model}\" value=\"${2:value}\" id=\"${3:id}\" />"
+    ],
+    "description": "Filament Radio component"
+  },
+  "Filament Alert": {
+    "prefix": "x-filament::alert",
+    "body": [
+      "<x-filament::alert type=\"${1|info,success,warning,danger|}\">",
+      "    $0",
+      "</x-filament::alert>"
+    ],
+    "description": "Filament Alert component - Displays a colored alert box"
+  },
+  "Filament Badge": {
+    "prefix": "x-filament::badge",
+    "body": [
+      "<x-filament::badge${1: color=\"${2|primary,danger,gray,info,success,warning|}\"} ${3:size=\"${4|xs,sm,md,lg|}\"}>",
+      "    ${5:Label}",
+      "</x-filament::badge>"
+    ],
+    "description": "Filament Badge component - Small label often used for status or count"
+  },
+  "Filament Avatar": {
+    "prefix": "x-filament::avatar",
+    "body": [
+      "<x-filament::avatar src=\"${1:https://example.com/image.jpg}\" alt=\"${2:Description}\"${3: size=\"${4|sm,md,lg|}\"} ${5::circular=\"${6|true,false|}\"}>"
+    ],
+    "description": "Filament Avatar component - Displays a user profile image"
+  },
+  "Filament Section": {
+    "prefix": "x-filament::section",
+    "body": [
+      "<x-filament::section>",
+      "    <x-slot name=\"heading\">",
+      "        ${1:Section Heading}",
+      "    </x-slot>",
+      "    ",
+      "    <x-slot name=\"description\">",
+      "        ${2:Section description text}",
+      "    </x-slot>",
+      "    ",
+      "    $0",
+      "</x-filament::section>"
+    ],
+    "description": "Filament Section component - Groups content with heading and description"
+  },
+  "Filament Tabs": {
+    "prefix": "x-filament::tabs",
+    "body": [
+      "<x-filament::tabs>",
+      "    <x-filament::tabs.item>",
+      "        <x-slot name=\"label\">",
+      "            ${1:Tab 1}",
+      "        </x-slot>",
+      "        ",
+      "        ${2:Content for tab 1}",
+      "    </x-filament::tabs.item>",
+      "    ",
+      "    <x-filament::tabs.item>",
+      "        <x-slot name=\"label\">",
+      "            ${3:Tab 2}",
+      "        </x-slot>",
+      "        ",
+      "        ${4:Content for tab 2}",
+      "    </x-filament::tabs.item>",
+      "    ",
+      "    $0",
+      "</x-filament::tabs>"
+    ],
+    "description": "Filament Tabs component - Creates tabbed interface for content"
+  },
+  "Filament Modal": {
+    "prefix": "x-filament::modal",
+    "body": [
+      "<x-filament::modal${1: width=\"${2|xs,sm,md,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl|}\"}>",
+      "    <x-slot name=\"trigger\">",
+      "        ${3:Trigger Content}",
+      "    </x-slot>",
+      "    ",
+      "    <x-slot name=\"heading\">",
+      "        ${4:Modal Heading}",
+      "    </x-slot>",
+      "    ",
+      "    ${5:Modal content}",
+      "    ",
+      "    <x-slot name=\"footer\">",
+      "        <x-filament::button wire:click=\"${6:confirmAction}\">",
+      "            ${7:Confirm}",
+      "        </x-filament::button>",
+      "    </x-slot>",
+      "</x-filament::modal>"
+    ],
+    "description": "Filament Modal component - Creates a popup dialog box"
+  },
+  "Filament Link": {
+    "prefix": "x-filament::link",
+    "body": [
+      "<x-filament::link href=\"${1:url}\"${2: color=\"${3|primary,danger,gray,info,success,warning|}\"} ${4:icon=\"${5:heroicon-m-arrow-right}\"}>",
+      "    ${6:Link text}",
+      "</x-filament::link>"
+    ],
+    "description": "Filament Link component - Styled hyperlink"
+  },
+  "Filament Icon Button": {
+    "prefix": "x-filament::icon-button",
+    "body": [
+      "<x-filament::icon-button icon=\"${1:heroicon-m-plus}\"${2: color=\"${3|primary,danger,gray,info,success,warning|}\"} ${4:size=\"${5|sm,md,lg|}\"} ${6:wire:click=\"${7:action}\"}${8: tooltip=\"${9:Button tooltip}\"}${10: label=\"${11:Button label}\"} />"
+    ],
+    "description": "Filament Icon Button component - Button that displays only an icon"
+  },
+  "Filament Loading Indicator": {
+    "prefix": "x-filament::loading-indicator",
+    "body": [
+      "<x-filament::loading-indicator${1: class=\"${2:w-5 h-5}\"} />"
+    ],
+    "description": "Filament Loading Indicator component - Spinning animation for loading states"
+  },
+  "Filament Fieldset": {
+    "prefix": "x-filament::fieldset",
+    "body": [
+      "<x-filament::fieldset>",
+      "    <x-slot name=\"label\">",
+      "        ${1:Fieldset Label}",
+      "    </x-slot>",
+      "    ",
+      "    $0",
+      "</x-filament::fieldset>"
+    ],
+    "description": "Filament Fieldset component - Groups related form inputs"
+  },
+  "Filament Breadcrumbs": {
+    "prefix": "x-filament::breadcrumbs",
+    "body": [
+      "<x-filament::breadcrumbs :breadcrumbs=\"[",
+      "    ['label' => '${1:Home}', 'url' => '${2:/}'],",
+      "    ['label' => '${3:Current Page}'],",
+      "]\" />"
+    ],
+    "description": "Filament Breadcrumbs component - Navigation path showing hierarchy"
+  },
+  "Filament Pagination": {
+    "prefix": "x-filament::pagination",
+    "body": [
+      "<x-filament::pagination :paginator=\"\\$${1:records}\" />"
+    ],
+    "description": "Filament Pagination component - Navigation for paginated data"
+  },
+  "Filament Tabs Item": {
+    "prefix": "x-filament::tabs.item",
+    "body": [
+      "<x-filament::tabs.item${1: icon=\"${2:heroicon-m-user}\"}>",
+      "    <x-slot name=\"label\">",
+      "        ${3:Tab Label}",
+      "    </x-slot>",
+      "    ",
+      "    ${4:Tab content}",
+      "</x-filament::tabs.item>"
+    ],
+    "description": "Filament Tabs Item - Individual tab panel within a tabs component"
+  }
+} 

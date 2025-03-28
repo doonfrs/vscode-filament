@@ -1,0 +1,51 @@
+{
+  "name": "vscode-filament",
+  "displayName": "Filament UI",
+  "description": "Provides autocompletion for Filament UI components in Blade files",
+  "version": "0.2.0",
+  "icon": "images/icon.png",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "blade",
+        "extensions": [
+          ".blade.php"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "blade",
+        "scopeName": "text.html.blade",
+        "path": "./syntaxes/blade.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "blade",
+        "path": "./snippets/filament.json"
+      }
+    ]
+  },
+  "main": "./extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run lint",
+    "lint": "eslint .",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^16.0.0",
+    "@types/vscode": "^1.75.0",
+    "eslint": "^8.0.0",
+    "vsce": "^2.6.0"
+  }
+} 

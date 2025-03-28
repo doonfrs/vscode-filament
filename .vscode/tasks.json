@@ -1,0 +1,10 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Extension",
+            "type": "shell",
+            "command": "code --extensionDevelopmentPath=${workspaceFolder}"
+        }
+    ]
+} 

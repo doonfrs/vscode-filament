@@ -1,0 +1,138 @@
+{
+  "name": "Laravel Blade with Filament",
+  "scopeName": "text.html.blade",
+  "fileTypes": [
+    "blade.php"
+  ],
+  "patterns": [
+    {
+      "include": "#blade-directives"
+    },
+    {
+      "include": "#filament-components"
+    },
+    {
+      "include": "text.html.basic"
+    }
+  ],
+  "repository": {
+    "blade-directives": {
+      "patterns": [
+        {
+          "name": "meta.embedded.block.blade",
+          "begin": "{{",
+          "beginCaptures": {
+            "0": {"name": "support.function.blade"}
+          },
+          "end": "}}",
+          "endCaptures": {
+            "0": {"name": "support.function.blade"}
+          },
+          "patterns": [
+            {"include": "source.php"}
+          ]
+        },
+        {
+          "name": "meta.embedded.block.blade",
+          "begin": "{!!",
+          "beginCaptures": {
+            "0": {"name": "support.function.blade"}
+          },
+          "end": "!!}",
+          "endCaptures": {
+            "0": {"name": "support.function.blade"}
+          },
+          "patterns": [
+            {"include": "source.php"}
+          ]
+        },
+        {
+          "name": "comment.block.blade",
+          "begin": "{{--",
+          "end": "--}}"
+        },
+        {
+          "name": "meta.directive.blade",
+          "match": "@(\\w+)(\\(?)",
+          "captures": {
+            "1": {"name": "keyword.control.blade"},
+            "2": {"name": "punctuation.definition.parameters.begin.blade"}
+          }
+        }
+      ]
+    },
+    "filament-components": {
+      "patterns": [
+        {
+          "name": "meta.tag.block.filament.html",
+          "begin": "(<)(x-filament::[\\w\\.-]+)",
+          "beginCaptures": {
+            "1": {"name": "punctuation.definition.tag.begin.html"},
+            "2": {"name": "support.function.filament.tag.html"}
+          },
+          "end": "(>)|(/?>)",
+          "endCaptures": {
+            "1": {"name": "punctuation.definition.tag.end.html"},
+            "2": {"name": "punctuation.definition.tag.end.html"}
+          },
+          "patterns": [
+            {
+              "include": "#filament-tag-attributes"
+            }
+          ]
+        },
+        {
+          "name": "meta.tag.block.filament.html",
+          "begin": "(</)(x-filament::[\\w\\.-]+)",
+          "beginCaptures": {
+            "1": {"name": "punctuation.definition.tag.begin.html"},
+            "2": {"name": "support.function.filament.tag.html"}
+          },
+          "end": "(>)",
+          "endCaptures": {
+            "1": {"name": "punctuation.definition.tag.end.html"}
+          }
+        },
+        {
+          "name": "support.class.filament.attribute",
+          "match": "\\b(wire:[\\w\\.-]+|\\@error|\\@enderror)\\b"
+        }
+      ]
+    },
+    "filament-tag-attributes": {
+      "patterns": [
+        {
+          "name": "meta.attribute.filament",
+          "match": "(?:\\s|^)(:?)([a-zA-Z0-9_-]+)\\s*(=)",
+          "captures": {
+            "1": {"name": "punctuation.definition.attribute.livewire.html"},
+            "2": {"name": "entity.other.attribute-name.html"},
+            "3": {"name": "punctuation.separator.key-value.html"}
+          }
+        },
+        {
+          "name": "string.quoted.double.html",
+          "begin": "\"",
+          "beginCaptures": {
+            "0": {"name": "punctuation.definition.string.begin.html"}
+          },
+          "end": "\"",
+          "endCaptures": {
+            "0": {"name": "punctuation.definition.string.end.html"}
+          }
+        },
+        {
+          "name": "string.quoted.single.html",
+          "begin": "'",
+          "beginCaptures": {
+            "0": {"name": "punctuation.definition.string.begin.html"}
+          },
+          "end": "'",
+          "endCaptures": {
+            "0": {"name": "punctuation.definition.string.end.html"}
+          }
+        }
+      ]
+    }
+  }
+} 

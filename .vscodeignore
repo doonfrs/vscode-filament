@@ -1,0 +1,8 @@
+.vscode/**
+.git/**
+.gitignore
+node_modules/**
+*.vsix
+.pnotes/**
+.eslintrc.json
+.npmrc 
