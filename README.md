@@ -55,9 +55,6 @@ This extension provides full support for Filament UI components as documented in
 - `x-filament::input.label` - Labels for form inputs
 - `x-filament::input.error` - Error messages for form validation
 - `x-filament::select` - Dropdown selection
-- `x-filament::textarea` - Multi-line text input
-- `x-filament::toggle` - Toggle switch input
-- `x-filament::radio` - Radio button input
 
 ### UI Components for Tables
 

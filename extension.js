@@ -18,12 +18,12 @@ function activate(context) {
                     // When user types "<", suggests Filament components
                     // We'll need a specialized completion here that doesn't duplicate the "<"
                     const filamentTags = [
-                        'x-filament::input', 'x-filament::button', 'x-filament::alert', 'x-filament::card',
+                        'x-filament::input', 'x-filament::button',
                         'x-filament::dropdown', 'x-filament::modal', 'x-filament::avatar', 'x-filament::badge',
-                        'x-filament::textarea', 'x-filament::select', 'x-filament::toggle', 'x-filament::checkbox',
-                        'x-filament::radio', 'x-filament::section', 'x-filament::tabs', 'x-filament::link',
+                        'x-filament::select', 'x-filament::checkbox',
+                        'x-filament::section', 'x-filament::tabs', 'x-filament::link',
                         'x-filament::icon-button', 'x-filament::loading-indicator', 'x-filament::fieldset',
-                        'x-filament::breadcrumbs', 'x-filament::pagination', 'x-filament::form'
+                        'x-filament::breadcrumbs', 'x-filament::pagination'
                     ];
                     
                     return filamentTags.map(tag => {
@@ -37,8 +37,6 @@ function activate(context) {
                         
                         if (isSelfClosing) {
                             item.insertText = new vscode.SnippetString(`${tag} $0 />`);
-                        } else if (tag === 'x-filament::alert') {
-                            item.insertText = new vscode.SnippetString(`${tag} type="\${1|info,success,warning,danger|}">\n    $0\n</${tag}>`);
                         } else {
                             item.insertText = new vscode.SnippetString(`${tag}>\n    $0\n</${tag}>`);
                         }
@@ -109,8 +107,6 @@ function activate(context) {
                         
                         if (isSelfClosing) {
                             item.insertText = new vscode.SnippetString(`${tagPrefix}${componentName} $0 />`);
-                        } else if (componentName === 'x-filament::alert') {
-                            item.insertText = new vscode.SnippetString(`${tagPrefix}${componentName} type="\${1|info,success,warning,danger|}">\n    $0\n</${componentName}>`);
                         } else {
                             item.insertText = new vscode.SnippetString(`${tagPrefix}${componentName}>\n    $0\n</${componentName}>`);
                         }
@@ -163,7 +159,7 @@ function activate(context) {
                     // If not typing a component name, continue with original attribute suggestions
                 }
                 
-                // For component recognition when typing a full tag like <x-filament::alert
+                // For component recognition when typing a full tag
                 if (linePrefix.match(/^[\s\t]*<x-filament::[a-zA-Z0-9.-]+$/i)) {
                     const componentMatch = linePrefix.match(/<(x-filament::[a-zA-Z0-9.-]+)$/i);
                     if (componentMatch && componentMatch[1]) {

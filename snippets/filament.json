@@ -22,13 +22,6 @@
     ],
     "description": "Filament Input Label component"
   },
-  "Filament Textarea": {
-    "prefix": "x-filament::textarea",
-    "body": [
-      "<x-filament::textarea wire:model=\"${1:model}\" id=\"${2:id}\" rows=\"${3:3}\" />"
-    ],
-    "description": "Filament Textarea component"
-  },
   "Filament Input Error": {
     "prefix": "x-filament::input.error",
     "body": [
@@ -44,15 +37,6 @@
       "</x-filament::button>"
     ],
     "description": "Filament Button component - Renders a clickable button for actions"
-  },
-  "Filament Card": {
-    "prefix": "x-filament::card",
-    "body": [
-      "<x-filament::card>",
-      "    $0",
-      "</x-filament::card>"
-    ],
-    "description": "Filament Card component"
   },
   "Filament Dropdown": {
     "prefix": "x-filament::dropdown",
@@ -90,15 +74,6 @@
     ],
     "description": "Filament Dropdown List - Container for dropdown items with consistent styling"
   },
-  "Filament Form": {
-    "prefix": "x-filament::form",
-    "body": [
-      "<x-filament::form wire:submit=\"${1:submit}\">",
-      "    $0",
-      "</x-filament::form>"
-    ],
-    "description": "Filament Form component"
-  },
   "Filament Select": {
     "prefix": "x-filament::select",
     "body": [
@@ -109,35 +84,12 @@
     ],
     "description": "Filament Select component - Dropdown selection input"
   },
-  "Filament Toggle": {
-    "prefix": "x-filament::toggle",
-    "body": [
-      "<x-filament::toggle wire:model=\"${1:model}\" />"
-    ],
-    "description": "Filament Toggle component"
-  },
   "Filament Checkbox": {
     "prefix": "x-filament::checkbox",
     "body": [
       "<x-filament::checkbox wire:model=\"${1:model}\" id=\"${2:id}\"${3: label=\"${4:Label}\"} />"
     ],
     "description": "Filament Checkbox component - Creates a checkbox input"
-  },
-  "Filament Radio": {
-    "prefix": "x-filament::radio",
-    "body": [
-      "<x-filament::radio wire:model=\"${1:model}\" value=\"${2:value}\" id=\"${3:id}\" />"
-    ],
-    "description": "Filament Radio component"
-  },
-  "Filament Alert": {
-    "prefix": "x-filament::alert",
-    "body": [
-      "<x-filament::alert type=\"${1|info,success,warning,danger|}\">",
-      "    $0",
-      "</x-filament::alert>"
-    ],
-    "description": "Filament Alert component - Displays a colored alert box"
   },
   "Filament Badge": {
     "prefix": "x-filament::badge",
@@ -309,13 +261,6 @@
     ],
     "description": "Filament Input Label component"
   },
-  "<Filament Textarea": {
-    "prefix": "<x-filament::textarea",
-    "body": [
-      "<x-filament::textarea wire:model=\"${1:model}\" id=\"${2:id}\" rows=\"${3:3}\" /"
-    ],
-    "description": "Filament Textarea component"
-  },
   "<Filament Input Error": {
     "prefix": "<x-filament::input.error",
     "body": [
@@ -331,15 +276,6 @@
       "</x-filament::button"
     ],
     "description": "Filament Button component - Renders a clickable button for actions"
-  },
-  "<Filament Card": {
-    "prefix": "<x-filament::card",
-    "body": [
-      "<x-filament::card>",
-      "    $0",
-      "</x-filament::card"
-    ],
-    "description": "Filament Card component"
   },
   "<Filament Dropdown": {
     "prefix": "<x-filament::dropdown",
@@ -377,15 +313,6 @@
     ],
     "description": "Filament Dropdown List - Container for dropdown items with consistent styling"
   },
-  "<Filament Form": {
-    "prefix": "<x-filament::form",
-    "body": [
-      "<x-filament::form wire:submit=\"${1:submit}\">",
-      "    $0",
-      "</x-filament::form"
-    ],
-    "description": "Filament Form component"
-  },
   "<Filament Select": {
     "prefix": "<x-filament::select",
     "body": [
@@ -396,35 +323,12 @@
     ],
     "description": "Filament Select component - Dropdown selection input"
   },
-  "<Filament Toggle": {
-    "prefix": "<x-filament::toggle",
-    "body": [
-      "<x-filament::toggle wire:model=\"${1:model}\" /"
-    ],
-    "description": "Filament Toggle component"
-  },
   "<Filament Checkbox": {
     "prefix": "<x-filament::checkbox",
     "body": [
       "<x-filament::checkbox wire:model=\"${1:model}\" id=\"${2:id}\"${3: label=\"${4:Label}\"} /"
     ],
     "description": "Filament Checkbox component - Creates a checkbox input"
-  },
-  "<Filament Radio": {
-    "prefix": "<x-filament::radio",
-    "body": [
-      "<x-filament::radio wire:model=\"${1:model}\" value=\"${2:value}\" id=\"${3:id}\" /"
-    ],
-    "description": "Filament Radio component"
-  },
-  "<Filament Alert": {
-    "prefix": "<x-filament::alert",
-    "body": [
-      "<x-filament::alert type=\"${1|info,success,warning,danger|}\">",
-      "    $0",
-      "</x-filament::alert"
-    ],
-    "description": "Filament Alert component - Displays a colored alert box"
   },
   "<Filament Badge": {
     "prefix": "<x-filament::badge",

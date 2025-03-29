@@ -13,82 +13,6 @@
         <x-filament::avatar src="https://example.com/image.jpg" alt="Description" size="sm" :circular="true">
         <x-filament::avatar src="https://example.com/image.jpg" alt="Description" size="sm" :circular="true">
 
-        <x-filament::form wire:submit="save">
-            <x-filament::card>
-                <x-filament::input.wrapper>
-                    <x-filament::input.label for="name">Name</x-filament::input.label>
-                    <x-filament::input wire:model="name" id="name" wire:model="true" />
-                    @error('name')
-                        <x-filament::input.error>{{ $message }}</x-filament::input.error>
-                    @enderror
-                </x-filament::input.wrapper>
-                
-                <!-- Textarea field -->
-                <x-filament::input.wrapper disabled >
-                    <x-filament::input.label for="description">Description (Optional)</x-filament::input.label>
-                    <x-filament::textarea wire:model="description" id="description" rows="3" />
-                </x-filament::input.wrapper>
-                
-                <!-- Select field -->
-                <x-filament::input.wrapper>
-                    <x-filament::input.label for="category">Category</x-filament::input.label>
-                    <x-filament::select disabled placeholder="value" wire:model="category" id="category">
-                        <option value="">Select a category</option>
-                        <option value="1">Category 1</option>
-                        <option value="2">Category 2</option>
-                    </x-filament::select>
-                </x-filament::input.wrapper>
-                
-                <!-- Checkbox field -->
-                <x-filament::input.wrapper>
-                    <div class="flex items-center">
-                        <x-filament::checkbox wire:click="true" wire:model="subscribe" id="subscribe" />
-                        <x-filament::input.label for="subscribe" class="ml-2">
-                            Subscribe to newsletter
-                        </x-filament::input.label>
-                    </div>
-                </x-filament::input.wrapper>
-                
-                <!-- Toggle field -->
-                <x-filament::input.wrapper>
-                    <div class="flex items-center">
-                        <x-filament::toggle wire:model="status" />
-                        <span class="ml-2">Active</span>
-                    </div>
-                </x-filament::input.wrapper>
-                
-                <!-- Radio field -->
-                <x-filament::input.wrapper>
-                    <x-filament::input.label>Notification Preference</x-filament::input.label>
-                    <div class="space-y-2">
-                        <div class="flex items-center">
-                            <x-filament::radio wire:model="notification" value="email" id="notification_email" />
-                            <x-filament::input.label for="notification_email" class="ml-2">
-                                Email
-                            </x-filament::input.label>
-                        </div>
-                        <div class="flex items-center">
-                            <x-filament::radio wire:model="notification" value="sms" id="notification_sms" />
-                            <x-filament::input.label for="notification_sms" class="ml-2">
-                                SMS
-                            </x-filament::input.label>
-                        </div>
-                    </div>
-                </x-filament::input.wrapper>
-            </x-filament::card>
-            
-            <div class="mt-4">
-                <x-filament::button type="submit">
-                    Save
-                </x-filament::button>
-            </div>
-        </x-filament::form>
-        
-        <!-- Alert component -->
-        <x-filament::alert type="success" class="mt-4">
-            Your form has been submitted successfully.
-        </x-filament::alert>
-        
         <!-- Badge component -->
         <div class="mt-4">
             <x-filament::badge>New</x-filament::badge>
@@ -97,9 +21,6 @@
 
         <x-filament::avatar src="https://example.com/image.jpg" alt="Description" size="sm" :circular="true">
 
-<x-filament::alert type="info" icon="heroicon-m-information-circle">
-    
-</x-filament::alert>
         <x-filament::breadcrumbs 
         :breadcrumbs="[
             ['label' => 'Home', 'url' => '/'],
