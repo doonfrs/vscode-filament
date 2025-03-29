@@ -23,7 +23,7 @@ function activate(context) {
                         'x-filament::select', 'x-filament::checkbox',
                         'x-filament::section', 'x-filament::tabs', 'x-filament::link',
                         'x-filament::icon-button', 'x-filament::loading-indicator', 'x-filament::fieldset',
-                        'x-filament::breadcrumbs', 'x-filament::pagination'
+                        'x-filament::breadcrumbs', 'x-filament::pagination', 'x-filament::icon'
                     ];
                     
                     return filamentTags.map(tag => {
@@ -31,7 +31,7 @@ function activate(context) {
                         const componentName = tag.replace('x-filament::', '');
                         
                         // Check if the component is self-closing based on name
-                        const isSelfClosing = ['input', 'avatar', 'icon-button', 'loading-indicator', 'checkbox', 'radio'].some(
+                        const isSelfClosing = ['input', 'avatar', 'icon-button', 'loading-indicator', 'checkbox', 'radio', 'icon'].some(
                             name => tag === `x-filament::${name}` || tag.startsWith(`x-filament::${name}.`)
                         );
                         
@@ -101,7 +101,7 @@ function activate(context) {
                         const tagPrefix = hasOpeningBracket ? '' : '<';
                         
                         // Check if the component is self-closing based on name
-                        const isSelfClosing = ['input', 'avatar', 'icon-button', 'loading-indicator', 'checkbox', 'radio'].some(
+                        const isSelfClosing = ['input', 'avatar', 'icon-button', 'loading-indicator', 'checkbox', 'radio', 'icon'].some(
                             name => componentName === `x-filament::${name}` || componentName.startsWith(`x-filament::${name} `)
                         );
                         
@@ -133,7 +133,9 @@ function activate(context) {
                             'button', 'dropdown', 'dropdown.item', 'dropdown.list',
                             'badge', 'avatar', 'section',
                             'tabs', 'tabs.item', 'modal', 'link', 'icon-button',
-                            'loading-indicator', 'fieldset', 'breadcrumbs', 'pagination'
+                            'loading-indicator', 'fieldset', 'breadcrumbs', 'pagination',
+                            // Icons component
+                            'icon'
                         ];
                         
                         return filamentComponents.map(component => {
@@ -168,7 +170,7 @@ function activate(context) {
                         
                         // Check if the component is self-closing based on name
                         const baseName = componentName.replace('x-filament::', '');
-                        const isSelfClosing = ['input', 'avatar', 'icon-button', 'loading-indicator', 'checkbox', 'radio'].some(
+                        const isSelfClosing = ['input', 'avatar', 'icon-button', 'loading-indicator', 'checkbox', 'radio', 'icon'].some(
                             name => baseName === name || baseName.startsWith(`${name}.`)
                         );
                         
@@ -240,30 +242,31 @@ function activate(context) {
  * @returns {string|null} Documentation string or null
  */
 function getComponentDocumentation(component) {
-    const documentation = {
-        'input': 'Standard input field component for collecting text data from users.',
-        'input.wrapper': 'Wrapper component for inputs providing consistent styling and border.',
-        'select': 'Dropdown select component for choosing from predefined options.',
-        'checkbox': 'Checkbox input component for boolean selections.',
-        'button': 'Button component with various styling options like color, size, and icons.',
-        'dropdown': 'Interactive dropdown menu component for displaying a list of actions.',
-        'dropdown.item': 'Individual selectable item within a dropdown menu.',
+    const docs = {
+        'input': 'Text input component with enhanced styling and features.',
+        'input.wrapper': 'Wrapper for form inputs with consistent styling and validation states.',
+        'select': 'Dropdown selection component for choosing from a list of options.',
+        'checkbox': 'Checkbox component for toggling options on/off.',
+        'button': 'Interactive button component with various styling options.',
+        'dropdown': 'Toggleable dropdown menu component.',
+        'dropdown.item': 'Item within a dropdown menu.',
         'dropdown.list': 'Container for dropdown items with consistent styling.',
-        'badge': 'Small label component often used for status indicators or counters.',
-        'avatar': 'Component for displaying user profile images in a circular or square format.',
-        'section': 'Content section with optional heading and description.',
-        'tabs': 'Tabbed interface component for organizing content into separate views.',
-        'tabs.item': 'Individual tab panel within the tabs component.',
-        'modal': 'Dialog box component that appears over the page content.',
-        'link': 'Styled hyperlink component with various formatting options.',
-        'icon-button': 'Button that displays only an icon with optional tooltip.',
-        'loading-indicator': 'Animated spinner component for indicating loading states.',
+        'badge': 'Small visual label often used to display status or count.',
+        'avatar': 'Component for displaying user profile images.',
+        'section': 'Container that groups related content with optional heading and description.',
+        'tabs': 'Component for organizing content in multiple selectable tabs.',
+        'tabs.item': 'Individual tab panel within a tabs component.',
+        'modal': 'Popup dialog for focused interactions.',
+        'link': 'Styled hyperlink component.',
+        'icon-button': 'Button that displays only an icon.',
+        'loading-indicator': 'Animated loading spinner component.',
         'fieldset': 'Component for grouping related form elements with an optional label.',
         'breadcrumbs': 'Navigation component showing the hierarchical path to the current page.',
-        'pagination': 'Component for navigating through paginated data sets.'
+        'pagination': 'Component for navigating through paginated data sets.',
+        'icon': 'Component for displaying icons from the Filament icon system. Supports built-in icons, Heroicons, and custom SVG icons.'
     };
     
-    return documentation[component] || null;
+    return docs[component] || `Filament ${component} component`;
 }
 
 /**
@@ -274,153 +277,195 @@ function getComponentDocumentation(component) {
 function getComponentAttributes(componentName) {
     const attributes = [];
     
-    // Common attributes for most components
-    attributes.push(createAttribute('id', 'Unique identifier'));
-    attributes.push(createAttribute('class', 'CSS classes'));
+    // Common attributes for all components
+    attributes.push(
+        createAttribute('class', 'CSS classes to apply to the component'),
+        createAttribute('id', 'Unique identifier for the component')
+    );
     
     // Component-specific attributes
     switch (componentName) {
         case 'input':
-            attributes.push(createAttribute('type', 'Input type (text, email, password, etc.)', 'type="\${1|text,email,password,number,tel,url|}"'));
-            attributes.push(createAttribute('wire:model', 'Livewire data binding'));
-            attributes.push(createAttribute('disabled', 'Disabled state', 'disabled'));
-            attributes.push(createAttribute('placeholder', 'Placeholder text'));
+            attributes.push(
+                createAttribute('type', 'Input type (text, email, password, number, tel, url)', 'type="${1|text,email,password,number,tel,url|}"'),
+                createAttribute('wire:model', 'Livewire model binding'),
+                createAttribute('placeholder', 'Placeholder text'),
+                createAttribute('disabled', 'Disables the input'),
+                createAttribute('readonly', 'Makes the input readonly')
+            );
             break;
             
         case 'input.wrapper':
-            attributes.push(createAttribute('valid', 'Validation state', ':valid="\${1:condition}"'));
-            attributes.push(createAttribute('disabled', 'Disabled state', 'disabled'));
-            attributes.push(createAttribute('prefix-icon', 'Icon displayed before the input'));
-            attributes.push(createAttribute('suffix-icon', 'Icon displayed after the input'));
-            attributes.push(createAttribute('prefix-icon-color', 'Color of the prefix icon', 'prefix-icon-color="\${1|primary,danger,gray,info,success,warning|}"'));
-            attributes.push(createAttribute('suffix-icon-color', 'Color of the suffix icon', 'suffix-icon-color="\${1|primary,danger,gray,info,success,warning|}"'));
+            attributes.push(
+                createAttribute('valid', 'Validation state', ':valid="${1:condition}"'),
+                createAttribute('disabled', 'Disabled state', 'disabled'),
+                createAttribute('prefix-icon', 'Icon displayed before the input'),
+                createAttribute('suffix-icon', 'Icon displayed after the input'),
+                createAttribute('prefix-icon-color', 'Color of the prefix icon', 'prefix-icon-color="${1|primary,danger,gray,info,success,warning|}"'),
+                createAttribute('suffix-icon-color', 'Color of the suffix icon', 'suffix-icon-color="${1|primary,danger,gray,info,success,warning|}"')
+            );
             break;
             
         case 'button':
-            attributes.push(createAttribute('type', 'Button type', 'type="\${1|button,submit,reset|}"'));
-            attributes.push(createAttribute('color', 'Button color', 'color="\${1|primary,danger,gray,info,success,warning|}"'));
-            attributes.push(createAttribute('size', 'Button size', 'size="\${1|xs,sm,md,lg,xl|}"'));
-            attributes.push(createAttribute('icon', 'Button icon'));
-            attributes.push(createAttribute('icon-position', 'Position of the icon', 'icon-position="\${1|before,after|}"'));
-            attributes.push(createAttribute('outlined', 'Outlined style', 'outlined'));
-            attributes.push(createAttribute('tooltip', 'Button tooltip'));
-            attributes.push(createAttribute('badge-color', 'Color of the badge', 'badge-color="\${1|primary,danger,gray,info,success,warning|}"'));
-            attributes.push(createAttribute('wire:click', 'Livewire click handler'));
-            attributes.push(createAttribute('tag', 'HTML tag to use', 'tag="\${1|button,a|}"'));
-            attributes.push(createAttribute('href', 'URL for link buttons (when tag is "a")'));
-            attributes.push(createAttribute('disabled', 'Disabled state', 'disabled'));
+            attributes.push(
+                createAttribute('type', 'Button type', 'type="${1|button,submit,reset|}"'),
+                createAttribute('color', 'Button color', 'color="${1|primary,danger,gray,info,success,warning|}"'),
+                createAttribute('size', 'Button size', 'size="${1|xs,sm,md,lg,xl|}"'),
+                createAttribute('icon', 'Button icon'),
+                createAttribute('icon-position', 'Position of the icon', 'icon-position="${1|before,after|}"'),
+                createAttribute('outlined', 'Outlined style', 'outlined'),
+                createAttribute('tooltip', 'Button tooltip'),
+                createAttribute('badge-color', 'Color of the badge', 'badge-color="${1|primary,danger,gray,info,success,warning|}"'),
+                createAttribute('wire:click', 'Livewire click handler'),
+                createAttribute('tag', 'HTML tag to use', 'tag="${1|button,a|}"'),
+                createAttribute('href', 'URL for link buttons (when tag is "a")'),
+                createAttribute('disabled', 'Disabled state', 'disabled')
+            );
             break;
             
         case 'avatar':
-            attributes.push(createAttribute('src', 'Image source URL'));
-            attributes.push(createAttribute('alt', 'Alternative text'));
-            attributes.push(createAttribute('size', 'Avatar size', 'size="\${1|sm,md,lg|}"'));
-            attributes.push(createAttribute('circular', 'Circular shape', ':circular="\${1|true,false|}"'));
+            attributes.push(
+                createAttribute('src', 'Image source URL'),
+                createAttribute('alt', 'Alternative text'),
+                createAttribute('size', 'Avatar size', 'size="${1|sm,md,lg|}"'),
+                createAttribute('circular', 'Circular shape', ':circular="${1|true,false|}"')
+            );
             break;
             
         case 'dropdown':
-            attributes.push(createAttribute('placement', 'Dropdown placement', 'placement="\${1|bottom-start,bottom,bottom-end,top-start,top,top-end,right-start,right,right-end,left-start,left,left-end|}"'));
-            attributes.push(createAttribute('width', 'Dropdown width', 'width="\${1|xs,sm,md,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl,screen-sm,screen-md,screen-lg,screen-xl,screen-2xl|}"'));
-            attributes.push(createAttribute('close-on-click', 'Close when item is clicked', ':close-on-click="\${1|true,false|}"'));
+            attributes.push(
+                createAttribute('placement', 'Dropdown placement', 'placement="${1|bottom-start,bottom,bottom-end,top-start,top,top-end,right-start,right,right-end,left-start,left,left-end|}"'),
+                createAttribute('width', 'Dropdown width', 'width="${1|xs,sm,md,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl,screen-sm,screen-md,screen-lg,screen-xl,screen-2xl|}"'),
+                createAttribute('close-on-click', 'Close when item is clicked', ':close-on-click="${1|true,false|}"')
+            );
             break;
             
         case 'dropdown.item':
-            attributes.push(createAttribute('icon', 'Icon for the dropdown item'));
-            attributes.push(createAttribute('icon-color', 'Color of the icon', 'icon-color="\${1|primary,danger,gray,info,success,warning|}"'));
-            attributes.push(createAttribute('color', 'Item color', 'color="\${1|primary,danger,gray,info,success,warning|}"'));
-            attributes.push(createAttribute('tag', 'HTML tag to use', 'tag="\${1|button,a|}"'));
-            attributes.push(createAttribute('href', 'URL for link items (when tag is "a")'));
-            attributes.push(createAttribute('image', 'URL to an image to display'));
-            attributes.push(createAttribute('badge-color', 'Color of the badge', 'badge-color="\${1|primary,danger,gray,info,success,warning|}"'));
+            attributes.push(
+                createAttribute('icon', 'Icon for the dropdown item'),
+                createAttribute('icon-color', 'Color of the icon', 'icon-color="${1|primary,danger,gray,info,success,warning|}"'),
+                createAttribute('color', 'Item color', 'color="${1|primary,danger,gray,info,success,warning|}"'),
+                createAttribute('tag', 'HTML tag to use', 'tag="${1|button,a|}"'),
+                createAttribute('href', 'URL for link items (when tag is "a")'),
+                createAttribute('image', 'URL to an image to display'),
+                createAttribute('badge-color', 'Color of the badge', 'badge-color="${1|primary,danger,gray,info,success,warning|}"')
+            );
             break;
             
         case 'link':
-            attributes.push(createAttribute('href', 'URL to link to'));
-            attributes.push(createAttribute('tag', 'HTML tag to use', 'tag="\${1|a,button|}"'));
-            attributes.push(createAttribute('size', 'Link size', 'size="\${1|sm,md,lg,xl,2xl|}"'));
-            attributes.push(createAttribute('color', 'Link color', 'color="\${1|primary,danger,gray,info,success,warning|}"'));
-            attributes.push(createAttribute('icon', 'Icon to display'));
-            attributes.push(createAttribute('icon-position', 'Position of the icon', 'icon-position="\${1|before,after|}"'));
-            attributes.push(createAttribute('tooltip', 'Link tooltip'));
-            attributes.push(createAttribute('badge-color', 'Color of the badge', 'badge-color="\${1|primary,danger,gray,info,success,warning|}"'));
-            attributes.push(createAttribute('weight', 'Font weight', 'weight="\${1|thin,extralight,light,normal,medium,semibold,bold,extrabold,black|}"'));
+            attributes.push(
+                createAttribute('href', 'URL to link to'),
+                createAttribute('tag', 'HTML tag to use', 'tag="${1|a,button|}"'),
+                createAttribute('size', 'Link size', 'size="${1|sm,md,lg,xl,2xl|}"'),
+                createAttribute('color', 'Link color', 'color="${1|primary,danger,gray,info,success,warning|}"'),
+                createAttribute('icon', 'Icon to display'),
+                createAttribute('icon-position', 'Position of the icon', 'icon-position="${1|before,after|}"'),
+                createAttribute('tooltip', 'Link tooltip'),
+                createAttribute('badge-color', 'Color of the badge', 'badge-color="${1|primary,danger,gray,info,success,warning|}"'),
+                createAttribute('weight', 'Font weight', 'weight="${1|thin,extralight,light,normal,medium,semibold,bold,extrabold,black|}"')
+            );
             break;
             
         case 'icon-button':
-            attributes.push(createAttribute('icon', 'Button icon'));
-            attributes.push(createAttribute('color', 'Button color', 'color="\${1|primary,danger,gray,info,success,warning|}"'));
-            attributes.push(createAttribute('size', 'Button size', 'size="\${1|sm,md,lg|}"'));
-            attributes.push(createAttribute('tooltip', 'Button tooltip'));
-            attributes.push(createAttribute('label', 'Button label (for accessibility)'));
-            attributes.push(createAttribute('wire:click', 'Livewire click handler'));
-            attributes.push(createAttribute('disabled', 'Disabled state', 'disabled'));
+            attributes.push(
+                createAttribute('icon', 'Button icon'),
+                createAttribute('color', 'Button color', 'color="${1|primary,danger,gray,info,success,warning|}"'),
+                createAttribute('size', 'Button size', 'size="${1|sm,md,lg|}"'),
+                createAttribute('tooltip', 'Button tooltip'),
+                createAttribute('label', 'Button label (for accessibility)'),
+                createAttribute('wire:click', 'Livewire click handler'),
+                createAttribute('disabled', 'Disabled state', 'disabled')
+            );
             break;
             
         case 'modal':
-            attributes.push(createAttribute('width', 'Modal width', 'width="\${1|xs,sm,md,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl|}"'));
-            attributes.push(createAttribute('slide-over', 'Side panel style', 'slide-over'));
-            attributes.push(createAttribute('close-by-clicking-away', 'Close when clicking outside', ':close-by-clicking-away="\${1|true,false|}"'));
-            attributes.push(createAttribute('close-by-escaping', 'Close when escape key is pressed', ':close-by-escaping="\${1|true,false|}"'));
-            attributes.push(createAttribute('close-button', 'Show close button', ':close-button="\${1|true,false|}"'));
-            attributes.push(createAttribute('display-close-button', 'Show close button (alias)', ':display-close-button="\${1|true,false|}"'));
-            attributes.push(createAttribute('icon', 'Icon to display'));
-            attributes.push(createAttribute('icon-color', 'Color of the icon', 'icon-color="\${1|primary,danger,gray,info,success,warning|}"'));
-            attributes.push(createAttribute('alignment', 'Content alignment', 'alignment="\${1|start,center|}"'));
-            attributes.push(createAttribute('sticky-header', 'Make header sticky', 'sticky-header'));
-            attributes.push(createAttribute('sticky-footer', 'Make footer sticky', 'sticky-footer'));
-            attributes.push(createAttribute('autofocus', 'Auto-focus the first element', ':autofocus="\${1|true,false|}"'));
-            attributes.push(createAttribute('id', 'Unique identifier for opening/closing'));
+            attributes.push(
+                createAttribute('width', 'Modal width', 'width="${1|xs,sm,md,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl|}"'),
+                createAttribute('slide-over', 'Side panel style', 'slide-over'),
+                createAttribute('close-by-clicking-away', 'Close when clicking outside', ':close-by-clicking-away="${1|true,false|}"'),
+                createAttribute('close-by-escaping', 'Close when escape key is pressed', ':close-by-escaping="${1|true,false|}"'),
+                createAttribute('close-button', 'Show close button', ':close-button="${1|true,false|}"'),
+                createAttribute('display-close-button', 'Show close button (alias)', ':display-close-button="${1|true,false|}"'),
+                createAttribute('icon', 'Icon to display'),
+                createAttribute('icon-color', 'Color of the icon', 'icon-color="${1|primary,danger,gray,info,success,warning|}"'),
+                createAttribute('alignment', 'Content alignment', 'alignment="${1|start,center|}"'),
+                createAttribute('sticky-header', 'Make header sticky', 'sticky-header'),
+                createAttribute('sticky-footer', 'Make footer sticky', 'sticky-footer'),
+                createAttribute('autofocus', 'Auto-focus the first element', ':autofocus="${1|true,false|}"')
+            );
             break;
             
         case 'section':
-            attributes.push(createAttribute('collapsible', 'Can be collapsed', 'collapsible'));
-            attributes.push(createAttribute('collapsed', 'Initially collapsed', ':collapsed="\${1|true,false|}"'));
-            attributes.push(createAttribute('persist-collapsed', 'Remember collapsed state', 'persist-collapsed'));
-            attributes.push(createAttribute('aside', 'Content displayed in sidebar', 'aside'));
-            attributes.push(createAttribute('content-before', 'Position content before header', 'content-before'));
-            attributes.push(createAttribute('icon', 'Icon to display'));
-            attributes.push(createAttribute('icon-color', 'Color of the icon', 'icon-color="\${1|primary,danger,gray,info,success,warning|}"'));
-            attributes.push(createAttribute('icon-size', 'Size of the icon', 'icon-size="\${1|sm,md,lg|}"'));
+            attributes.push(
+                createAttribute('collapsible', 'Can be collapsed', 'collapsible'),
+                createAttribute('collapsed', 'Initially collapsed', ':collapsed="${1|true,false|}"'),
+                createAttribute('persist-collapsed', 'Remember collapsed state', 'persist-collapsed'),
+                createAttribute('aside', 'Content displayed in sidebar', 'aside'),
+                createAttribute('content-before', 'Position content before header', 'content-before'),
+                createAttribute('icon', 'Icon to display'),
+                createAttribute('icon-color', 'Color of the icon', 'icon-color="${1|primary,danger,gray,info,success,warning|}"'),
+                createAttribute('icon-size', 'Size of the icon', 'icon-size="${1|sm,md,lg|}"')
+            );
             break;
             
         case 'select':
-            attributes.push(createAttribute('wire:model', 'Livewire data binding'));
-            attributes.push(createAttribute('disabled', 'Disabled state', 'disabled'));
-            attributes.push(createAttribute('placeholder', 'Placeholder text'));
+            attributes.push(
+                createAttribute('wire:model', 'Livewire data binding'),
+                createAttribute('disabled', 'Disabled state', 'disabled'),
+                createAttribute('placeholder', 'Placeholder text')
+            );
             break;
             
         case 'tabs':
-            attributes.push(createAttribute('contained', 'Contained style', 'contained'));
+            attributes.push(
+                createAttribute('contained', 'Contained style', 'contained')
+            );
             break;
             
         case 'tabs.item':
-            attributes.push(createAttribute('active', 'Active state', ':active="\${1:condition}"'));
-            attributes.push(createAttribute('alpine-active', 'Alpine.js active expression', 'alpine-active="\${1:expression}"'));
-            attributes.push(createAttribute('icon', 'Icon to display'));
-            attributes.push(createAttribute('icon-position', 'Position of the icon', 'icon-position="\${1|before,after|}"'));
-            attributes.push(createAttribute('tag', 'HTML tag to use', 'tag="\${1|button,a|}"'));
-            attributes.push(createAttribute('href', 'URL for link tabs (when tag is "a")'));
+            attributes.push(
+                createAttribute('active', 'Active state', ':active="${1:condition}"'),
+                createAttribute('alpine-active', 'Alpine.js active expression', 'alpine-active="${1:expression}"'),
+                createAttribute('icon', 'Icon to display'),
+                createAttribute('icon-position', 'Position of the icon', 'icon-position="${1|before,after|}"'),
+                createAttribute('tag', 'HTML tag to use', 'tag="${1|button,a|}"'),
+                createAttribute('href', 'URL for link tabs (when tag is "a")')
+            );
             break;
             
         case 'badge':
-            attributes.push(createAttribute('color', 'Badge color', 'color="\${1|primary,danger,gray,info,success,warning|}"'));
-            attributes.push(createAttribute('size', 'Badge size', 'size="\${1|xs,sm,md,lg|}"'));
-            attributes.push(createAttribute('icon', 'Icon to display'));
-            attributes.push(createAttribute('icon-position', 'Position of the icon', 'icon-position="\${1|before,after|}"'));
+            attributes.push(
+                createAttribute('color', 'Badge color', 'color="${1|primary,danger,gray,info,success,warning|}"'),
+                createAttribute('size', 'Badge size', 'size="${1|xs,sm,md,lg|}"'),
+                createAttribute('icon', 'Icon to display'),
+                createAttribute('icon-position', 'Position of the icon', 'icon-position="${1|before,after|}"')
+            );
             break;
             
         case 'pagination':
-            attributes.push(createAttribute('paginator', 'The paginator instance', ':paginator="\${1:variable}"'));
-            attributes.push(createAttribute('page-options', 'Items per page options', ':page-options="\${1:[5, 10, 25, 50, 100]}"'));
-            attributes.push(createAttribute('current-page-option-property', 'Property for current page option', 'current-page-option-property="\${1:property}"'));
-            attributes.push(createAttribute('extreme-links', 'Show first and last page links', 'extreme-links'));
+            attributes.push(
+                createAttribute('paginator', 'The paginator instance', ':paginator="${1:variable}"'),
+                createAttribute('page-options', 'Items per page options', ':page-options="${1:[5, 10, 25, 50, 100]}"'),
+                createAttribute('current-page-option-property', 'Property for current page option', 'current-page-option-property="${1:property}"'),
+                createAttribute('extreme-links', 'Show first and last page links', 'extreme-links')
+            );
+            break;
+            
+        case 'icon':
+            attributes.push(
+                createAttribute('name', 'The name of the icon to display', 'name="${1:icon-name}"'),
+                createAttribute('size', 'The size of the icon', 'size="${1|xs,sm,md,lg,xl|}"'),
+                createAttribute('alias', 'The icon alias from Filament\'s icon library')
+            );
             break;
             
         // Add more component-specific attributes as needed
         default:
             // For other components, just add common wire: attributes
-            attributes.push(createAttribute('wire:model', 'Livewire data binding'));
-            attributes.push(createAttribute('wire:click', 'Livewire click handler'));
+            attributes.push(
+                createAttribute('wire:model', 'Livewire data binding'),
+                createAttribute('wire:click', 'Livewire click handler')
+            );
             break;
     }
     
@@ -436,16 +481,17 @@ function getComponentAttributes(componentName) {
  */
 function createAttribute(name, documentation, snippetText = null) {
     const item = new vscode.CompletionItem(name, vscode.CompletionItemKind.Property);
-    item.documentation = new vscode.MarkdownString(documentation);
+    item.documentation = documentation;
     
     if (snippetText) {
+        // Use the provided snippet text
         item.insertText = new vscode.SnippetString(snippetText);
     } else if (name.includes(':')) {
         // For boolean attributes with a colon prefix (like :disabled="true")
         item.insertText = new vscode.SnippetString(`${name}="\${1:true}"`);
     } else if (name === 'disabled' || name === 'readonly' || name === 'required' || name === 'outlined' || 
                name === 'contained' || name === 'collapsible' || name === 'dismissible' || name === 'aside') {
-        // For boolean attributes
+        // For boolean attributes with no value
         item.insertText = new vscode.SnippetString(name);
     } else {
         // For regular attributes

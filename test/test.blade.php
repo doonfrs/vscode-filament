@@ -93,7 +93,6 @@
             </x-filament::link>
         </div>
 
-
         <!-- Tabs component -->
         <div class="mt-4">
             <x-filament::tabs>

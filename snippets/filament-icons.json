@@ -1,0 +1,74 @@
+{
+  "Filament Icon": {
+    "prefix": "x-filament::icon",
+    "body": [
+      "<x-filament::icon name=\"${1:icon-name}\"${2: class=\"${3:w-5 h-5}\"}${4: size=\"${5|xs,sm,md,lg,xl|}\"} />"
+    ],
+    "description": "Filament Icon component - Renders an icon from the Filament icon library"
+  },
+  "Filament Panel Builder Icon": {
+    "prefix": "icon-panel",
+    "body": [
+      "${1|panels::activity-log,panels::auth.login,panels::auth.password-reset,panels::auth.register,panels::breadcrumbs.separator,panels::breadcrumbs.separator.rtl,panels::collections.multi-select,panels::collections.select,panels::dashboard.empty-state,panels::filters.group,panels::filters.remove-all-button,panels::global-search.field,panels::global-search.no-results,panels::global-search.results-container,panels::notifications.database,panels::pages.create-record.grouped,panels::pages.edit-record.grouped,panels::pages.grouped,panels::pages.settings.grouped,panels::sidebar.collapse-button,panels::sidebar.group.collapse-button,panels::tenant-menu|}"
+    ],
+    "description": "Common Filament Panel Builder icons for use in blade templates"
+  },
+  "Filament Form Builder Icon": {
+    "prefix": "icon-form",
+    "body": [
+      "${1|forms::components.builder.actions.clone,forms::components.builder.actions.collapse,forms::components.builder.actions.delete,forms::components.builder.actions.expand,forms::components.builder.actions.move-down,forms::components.builder.actions.move-up,forms::components.builder.actions.reorder,forms::components.checkbox.checked,forms::components.checkbox.indeterminate,forms::components.checkbox.unchecked,forms::components.color-picker.actions.toggle-panel,forms::components.file-upload.actions.cancel-upload,forms::components.file-upload.actions.delete,forms::components.file-upload.actions.download,forms::components.file-upload.actions.drag-handle,forms::components.file-upload.actions.open,forms::components.file-upload.actions.reorder,forms::components.file-upload.actions.sort,forms::components.file-upload.actions.upload,forms::components.file-upload.document-icon,forms::components.file-upload.editor.actions.crop,forms::components.file-upload.editor.actions.move-down,forms::components.file-upload.editor.actions.move-up,forms::components.file-upload.editor.actions.rotate-left,forms::components.file-upload.editor.actions.rotate-right,forms::components.file-upload.editor.actions.zoom-100,forms::components.file-upload.editor.actions.zoom-in,forms::components.file-upload.editor.actions.zoom-out,forms::components.key-value.actions.delete,forms::components.key-value.actions.reorder,forms::components.repeater.actions.clone,forms::components.repeater.actions.collapse,forms::components.repeater.actions.delete,forms::components.repeater.actions.expand,forms::components.repeater.actions.move-down,forms::components.repeater.actions.move-up,forms::components.repeater.actions.reorder,forms::components.select.actions.create-option,forms::components.select.actions.edit-option,forms::components.text-input.actions.hide-password,forms::components.text-input.actions.show-password,forms::components.toggle-buttons.boolean.false,forms::components.toggle-buttons.boolean.true,forms::components.wizard.completed-step|}"
+    ],
+    "description": "Common Filament Form Builder icons for use in blade templates"
+  },
+  "Filament Table Builder Icon": {
+    "prefix": "icon-table",
+    "body": [
+      "${1|tables::actions.disable-reordering,tables::actions.enable-reordering,tables::actions.filter,tables::actions.group,tables::actions.open-bulk-actions,tables::actions.toggle-columns,tables::columns.collapse-button,tables::columns.icon-column.false,tables::columns.icon-column.true,tables::empty-state,tables::filters.query-builder.constraints.boolean,tables::filters.query-builder.constraints.date,tables::filters.query-builder.constraints.number,tables::filters.query-builder.constraints.relationship,tables::filters.query-builder.constraints.select,tables::filters.query-builder.constraints.text,tables::filters.remove-all-button,tables::grouping.collapse-button,tables::header-cell.sort-asc-button,tables::header-cell.sort-button,tables::header-cell.sort-desc-button,tables::reorder.handle,tables::search-field|}"
+    ],
+    "description": "Common Filament Table Builder icons for use in blade templates"
+  },
+  "Filament Notifications Icon": {
+    "prefix": "icon-notification",
+    "body": [
+      "${1|notifications::database.modal.empty-state,notifications::notification.close-button,notifications::notification.danger,notifications::notification.info,notifications::notification.success,notifications::notification.warning|}"
+    ],
+    "description": "Common Filament Notification icons for use in blade templates"
+  },
+  "Filament Actions Icon": {
+    "prefix": "icon-action",
+    "body": [
+      "${1|actions::action-group,actions::create-action.grouped,actions::delete-action,actions::delete-action.grouped,actions::delete-action.modal,actions::detach-action,actions::detach-action.modal,actions::dissociate-action,actions::dissociate-action.modal,actions::edit-action,actions::edit-action.grouped,actions::export-action.grouped,actions::force-delete-action,actions::force-delete-action.grouped,actions::force-delete-action.modal,actions::import-action.grouped,actions::modal.confirmation,actions::replicate-action,actions::replicate-action.grouped,actions::restore-action,actions::restore-action.grouped,actions::restore-action.modal,actions::view-action,actions::view-action.grouped|}"
+    ],
+    "description": "Common Filament Action icons for use in blade templates"
+  },
+  "Filament Infolist Icon": {
+    "prefix": "icon-infolist",
+    "body": [
+      "${1|infolists::components.icon-entry.false,infolists::components.icon-entry.true|}"
+    ],
+    "description": "Common Filament Infolist icons for use in blade templates"
+  },
+  "Filament UI Component Icon": {
+    "prefix": "icon-ui",
+    "body": [
+      "${1|badge.delete-button,breadcrumbs.separator,breadcrumbs.separator.rtl,modal.close-button,pagination.first-button,pagination.first-button.rtl,pagination.last-button,pagination.last-button.rtl,pagination.next-button,pagination.next-button.rtl,pagination.previous-button,pagination.previous-button.rtl,section.collapse-button|}"
+    ],
+    "description": "Common Filament UI component icons for use in blade templates"
+  },
+  "Filament Custom SVG Icon": {
+    "prefix": "filament-svg-icon",
+    "body": [
+      "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"${1:h-5 w-5}\" viewBox=\"0 0 20 20\" fill=\"currentColor\">",
+      "    $0",
+      "</svg>"
+    ],
+    "description": "Base SVG template for creating custom icons for Filament"
+  },
+  "<Filament Icon": {
+    "prefix": "<x-filament::icon",
+    "body": [
+      "<x-filament::icon name=\"${1:icon-name}\"${2: class=\"${3:w-5 h-5}\"}${4: size=\"${5|xs,sm,md,lg,xl|}\"} /"
+    ],
+    "description": "Filament Icon component - Renders an icon from the Filament icon library"
+  }
+}

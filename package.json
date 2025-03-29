@@ -2,7 +2,7 @@
   "name": "vscode-filament",
   "displayName": "Filament VSCode",
   "description": "Provides autocompletion and snippets for Filament UI components in Blade files",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "icon": "images/icon.png",
   "publisher": "doonfrs",
   "author": {
@@ -53,6 +53,10 @@
       {
         "language": "blade",
         "path": "./snippets/filament.json"
+      },
+      {
+        "language": "blade",
+        "path": "./snippets/filament-icons.json"
       }
     ]
   },
