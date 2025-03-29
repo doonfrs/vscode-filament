@@ -64,11 +64,11 @@
     "filament-components": {
       "patterns": [
         {
-          "name": "meta.tag.block.filament.html",
+          "name": "meta.tag.any.html",
           "begin": "(<)(x-filament::[\\w\\.-]+)",
           "beginCaptures": {
             "1": {"name": "punctuation.definition.tag.begin.html"},
-            "2": {"name": "support.function.filament.tag.html"}
+            "2": {"name": "entity.name.tag.html"}
           },
           "end": "(>)|(/?>)",
           "endCaptures": {
@@ -82,11 +82,11 @@
           ]
         },
         {
-          "name": "meta.tag.block.filament.html",
+          "name": "meta.tag.any.html",
           "begin": "(</)(x-filament::[\\w\\.-]+)",
           "beginCaptures": {
             "1": {"name": "punctuation.definition.tag.begin.html"},
-            "2": {"name": "support.function.filament.tag.html"}
+            "2": {"name": "entity.name.tag.html"}
           },
           "end": "(>)",
           "endCaptures": {
@@ -94,7 +94,7 @@
           }
         },
         {
-          "name": "support.class.filament.attribute",
+          "name": "entity.other.attribute-name.blade",
           "match": "\\b(wire:[\\w\\.-]+|\\@error|\\@enderror)\\b"
         }
       ]
@@ -102,10 +102,10 @@
     "filament-tag-attributes": {
       "patterns": [
         {
-          "name": "meta.attribute.filament",
+          "name": "meta.attribute.html",
           "match": "(?:\\s|^)(:?)([a-zA-Z0-9_-]+)\\s*(=)",
           "captures": {
-            "1": {"name": "punctuation.definition.attribute.livewire.html"},
+            "1": {"name": "punctuation.definition.attribute.html"},
             "2": {"name": "entity.other.attribute-name.html"},
             "3": {"name": "punctuation.separator.key-value.html"}
           }

@@ -13,53 +13,206 @@ function activate(context) {
             provideCompletionItems(document, position) {
                 const linePrefix = document.lineAt(position).text.substr(0, position.character);
                 
-                // For basic Filament component completion
-                if (linePrefix.match(/<x-filament::/i)) {
-                    // Provide dynamic completions in addition to snippets
-                    const filamentComponents = [
-                        // Input components
-                        'input', 'input.wrapper', 'input.label', 'input.error',
-                        'textarea', 'select', 'checkbox', 'radio', 'toggle',
-                        // UI components
-                        'button', 'card', 'dropdown', 'dropdown.item', 'dropdown.list',
-                        'form', 'alert', 'badge', 'avatar', 'section',
-                        'tabs', 'tabs.item', 'modal', 'link', 'icon-button',
-                        'loading-indicator', 'fieldset', 'breadcrumbs', 'pagination'
+                // Check if we're at the start of what could be a tag
+                if (linePrefix.endsWith('<')) {
+                    // When user types "<", suggests Filament components
+                    // We'll need a specialized completion here that doesn't duplicate the "<"
+                    const filamentTags = [
+                        'x-filament::input', 'x-filament::button', 'x-filament::alert', 'x-filament::card',
+                        'x-filament::dropdown', 'x-filament::modal', 'x-filament::avatar', 'x-filament::badge',
+                        'x-filament::textarea', 'x-filament::select', 'x-filament::toggle', 'x-filament::checkbox',
+                        'x-filament::radio', 'x-filament::section', 'x-filament::tabs', 'x-filament::link',
+                        'x-filament::icon-button', 'x-filament::loading-indicator', 'x-filament::fieldset',
+                        'x-filament::breadcrumbs', 'x-filament::pagination', 'x-filament::form'
                     ];
                     
-                    return filamentComponents.map(component => {
-                        const item = new vscode.CompletionItem(`x-filament::${component}`, vscode.CompletionItemKind.Snippet);
-                        item.detail = `Filament ${component} component`;
+                    return filamentTags.map(tag => {
+                        const item = new vscode.CompletionItem(tag, vscode.CompletionItemKind.Snippet);
+                        const componentName = tag.replace('x-filament::', '');
                         
-                        // Add documentation based on the component
-                        const docs = getComponentDocumentation(component);
-                        if (docs) {
-                            item.documentation = new vscode.MarkdownString(docs);
+                        // Check if the component is self-closing based on name
+                        const isSelfClosing = ['input', 'avatar', 'icon-button', 'loading-indicator', 'checkbox', 'radio', 'toggle'].some(
+                            name => tag === `x-filament::${name}` || tag.startsWith(`x-filament::${name}.`)
+                        );
+                        
+                        if (isSelfClosing) {
+                            item.insertText = new vscode.SnippetString(`${tag} $0 />`);
+                        } else if (tag === 'x-filament::alert') {
+                            item.insertText = new vscode.SnippetString(`${tag} type="\${1|info,success,warning,danger|}">\n    $0\n</${tag}>`);
+                        } else {
+                            item.insertText = new vscode.SnippetString(`${tag}>\n    $0\n</${tag}>`);
                         }
+                        
+                        item.detail = `Filament ${componentName} component`;
+                        item.documentation = getComponentDocumentation(componentName);
                         
                         return item;
                     });
                 }
                 
-                // For attributes within Filament components
-                if (linePrefix.match(/<x-filament::[^>]*$/i)) {
-                    // Get the component name to provide specialized attributes
-                    const componentNameMatch = linePrefix.match(/<x-filament::([a-zA-Z0-9.-]+)/i);
-                    if (componentNameMatch && componentNameMatch[1]) {
-                        const componentName = componentNameMatch[1];
-                        return getComponentAttributes(componentName);
+                // Special handling for when user types <x and hits enter
+                if (linePrefix.match(/^[\s\t]*<x$/i)) {
+                    const item = new vscode.CompletionItem('x-filament::', vscode.CompletionItemKind.Snippet);
+                    item.detail = 'Filament component prefix';
+                    item.documentation = 'Prefix for all Filament UI components';
+                    item.insertText = new vscode.SnippetString('x-filament::$0');
+                    item.sortText = '0000'; // Ensure this appears at the top
+                    return [item];
+                }
+                
+                // For when user starts typing an x- directly
+                if (linePrefix.match(/^[\s\t]*<*x$/i)) {
+                    const item = new vscode.CompletionItem('x-filament::', vscode.CompletionItemKind.Snippet);
+                    item.detail = 'Filament component prefix';
+                    item.documentation = 'Prefix for all Filament UI components';
+                    
+                    // We need to check if there's already a "<" at the beginning
+                    const hasOpeningBracket = linePrefix.trimStart().startsWith('<');
+                    
+                    if (hasOpeningBracket) {
+                        item.insertText = new vscode.SnippetString('x-filament::$0');
+                    } else {
+                        item.insertText = new vscode.SnippetString('<x-filament::$0');
                     }
                     
-                    // Common attributes for all components
-                    const commonAttributes = [
-                        'wire:model', 'wire:click', 'id', 'class'
-                    ];
+                    return [item];
+                }
+                
+                // Handle the scenario where user types "<x-filament" directly and hits enter
+                if (linePrefix.match(/^[\s\t]*<x-filament$/i)) {
+                    // Provide x-filament:: prefix without adding another < at the beginning
+                    const item = new vscode.CompletionItem('x-filament::', vscode.CompletionItemKind.Snippet);
+                    item.detail = 'Filament component prefix';
+                    item.documentation = 'Prefix for all Filament UI components';
+                    item.insertText = new vscode.SnippetString('x-filament::$0');
+                    return [item];
+                }
+                
+                // Check if user is typing a Filament component without the opening bracket
+                // This happens when user types "x-filament::" directly
+                if (linePrefix.match(/^[\s\t]*x-filament::/i)) {
+                    const componentText = linePrefix.trim();
+                    const componentNameMatch = componentText.match(/^(x-filament::[a-zA-Z0-9.-]+)/i);
                     
-                    return commonAttributes.map(attr => {
-                        const item = new vscode.CompletionItem(attr, vscode.CompletionItemKind.Property);
-                        item.insertText = new vscode.SnippetString(`${attr}="\${1:value}"`);
-                        return item;
-                    });
+                    if (componentNameMatch && componentNameMatch[1]) {
+                        const componentName = componentNameMatch[1];
+                        const item = new vscode.CompletionItem(componentName, vscode.CompletionItemKind.Snippet);
+                        
+                        // Check for opening bracket to avoid duplication
+                        const hasOpeningBracket = linePrefix.trimStart().startsWith('<');
+                        const tagPrefix = hasOpeningBracket ? '' : '<';
+                        
+                        // Check if the component is self-closing based on name
+                        const isSelfClosing = ['input', 'avatar', 'icon-button', 'loading-indicator', 'checkbox', 'radio', 'toggle'].some(
+                            name => componentName === `x-filament::${name}` || componentName.startsWith(`x-filament::${name} `)
+                        );
+                        
+                        if (isSelfClosing) {
+                            item.insertText = new vscode.SnippetString(`${tagPrefix}${componentName} $0 />`);
+                        } else if (componentName === 'x-filament::alert') {
+                            item.insertText = new vscode.SnippetString(`${tagPrefix}${componentName} type="\${1|info,success,warning,danger|}">\n    $0\n</${componentName}>`);
+                        } else {
+                            item.insertText = new vscode.SnippetString(`${tagPrefix}${componentName}>\n    $0\n</${componentName}>`);
+                        }
+                        
+                        item.detail = `Filament ${componentName.replace('x-filament::', '')} component`;
+                        item.documentation = getComponentDocumentation(componentName.replace('x-filament::', ''));
+                        
+                        return [item];
+                    }
+                }
+                
+                // For basic Filament component completion
+                if (linePrefix.match(/<x-filament::/i)) {
+                    // Check if we're in the middle of typing a component name
+                    const isTypingComponentName = linePrefix.match(/<x-filament::([a-zA-Z0-9.-]*)$/i);
+                    
+                    if (isTypingComponentName) {
+                        // Provide dynamic completions for component names
+                        const filamentComponents = [
+                            // Input components
+                            'input', 'input.wrapper', 'input.label', 'input.error',
+                            'textarea', 'select', 'checkbox', 'radio', 'toggle',
+                            // UI components
+                            'button', 'card', 'dropdown', 'dropdown.item', 'dropdown.list',
+                            'form', 'alert', 'badge', 'avatar', 'section',
+                            'tabs', 'tabs.item', 'modal', 'link', 'icon-button',
+                            'loading-indicator', 'fieldset', 'breadcrumbs', 'pagination'
+                        ];
+                        
+                        return filamentComponents.map(component => {
+                            const item = new vscode.CompletionItem(component, vscode.CompletionItemKind.Snippet);
+                            item.detail = `Filament ${component} component`;
+                            
+                            // Only insert the component name part, not the full tag
+                            item.insertText = component;
+                            
+                            // Add documentation based on the component
+                            const docs = getComponentDocumentation(component);
+                            if (docs) {
+                                item.documentation = new vscode.MarkdownString(docs);
+                            }
+                            
+                            // Explicitly set a special sort order to ensure these appear at the top
+                            item.sortText = '0000' + component;
+                            
+                            return item;
+                        });
+                    }
+                    
+                    // If not typing a component name, continue with original attribute suggestions
+                }
+                
+                // For component recognition when typing a full tag like <x-filament::alert
+                if (linePrefix.match(/^[\s\t]*<x-filament::[a-zA-Z0-9.-]+$/i)) {
+                    const componentMatch = linePrefix.match(/<(x-filament::[a-zA-Z0-9.-]+)$/i);
+                    if (componentMatch && componentMatch[1]) {
+                        const componentName = componentMatch[1];
+                        const item = new vscode.CompletionItem(componentName, vscode.CompletionItemKind.Snippet);
+                        
+                        // Check if the component is self-closing based on name
+                        const baseName = componentName.replace('x-filament::', '');
+                        const isSelfClosing = ['input', 'avatar', 'icon-button', 'loading-indicator', 'checkbox', 'radio', 'toggle'].some(
+                            name => baseName === name || baseName.startsWith(`${name}.`)
+                        );
+                        
+                        if (isSelfClosing) {
+                            item.insertText = new vscode.SnippetString(`${componentName} $0 />`);
+                        } else if (baseName === 'alert') {
+                            item.insertText = new vscode.SnippetString(`${componentName} type="\${1|info,success,warning,danger|}">\n    $0\n</${componentName}>`);
+                        } else {
+                            item.insertText = new vscode.SnippetString(`${componentName}>\n    $0\n</${componentName}>`);
+                        }
+                        
+                        item.detail = `Filament ${baseName} component`;
+                        item.documentation = getComponentDocumentation(baseName);
+                        
+                        return [item];
+                    }
+                }
+                
+                // For attributes within Filament components
+                if (linePrefix.match(/<x-filament::[^>]*$/i)) {
+                    // Make sure we're not just typing a component name
+                    if (linePrefix.match(/<x-filament::[a-zA-Z0-9.-]*\s[^>]*$/i)) {
+                        // Get the component name to provide specialized attributes
+                        const componentNameMatch = linePrefix.match(/<x-filament::([a-zA-Z0-9.-]+)/i);
+                        if (componentNameMatch && componentNameMatch[1]) {
+                            const componentName = componentNameMatch[1];
+                            return getComponentAttributes(componentName);
+                        }
+                        
+                        // Common attributes for all components
+                        const commonAttributes = [
+                            'wire:model', 'wire:click', 'id', 'class'
+                        ];
+                        
+                        return commonAttributes.map(attr => {
+                            const item = new vscode.CompletionItem(attr, vscode.CompletionItemKind.Property);
+                            item.insertText = new vscode.SnippetString(`${attr}="\${1:value}"`);
+                            return item;
+                        });
+                    }
                 }
                 
                 return null;
