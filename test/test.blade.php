@@ -94,6 +94,17 @@
             <x-filament::badge>New</x-filament::badge>
             <x-filament::badge>Featured</x-filament::badge>
         </div>
+
+        <x-filament::avatar src="https://example.com/image.jpg" alt="Description" size="sm" :circular="true">
+
+<x-filament::alert type="info" icon="heroicon-m-information-circle">
+    
+</x-filament::alert>
+        <x-filament::breadcrumbs 
+        :breadcrumbs="[
+            ['label' => 'Home', 'url' => '/'],
+            ['label' => 'Current Page'],
+        ]" />
         
         <!-- Dropdown component -->
         <div class="mt-4">

@@ -1,15 +1,36 @@
 {
   "name": "vscode-filament",
   "displayName": "Filament UI",
-  "description": "Provides autocompletion for Filament UI components in Blade files",
+  "description": "Provides autocompletion and snippets for Filament UI components in Blade files",
   "version": "0.2.0",
   "icon": "images/icon.png",
+  "publisher": "doonfrs",
+  "author": {
+    "name": "Feras Abdalrahman"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/doonfrs/vscode-filament"
+  },
   "engines": {
     "vscode": "^1.75.0"
   },
   "categories": [
     "Programming Languages",
-    "Snippets"
+    "Snippets",
+    "Linters"
+  ],
+  "activationEvents": [
+    "workspaceContains:*.blade.php"
+  ],
+  "keywords": [
+    "filament",
+    "laravel",
+    "php",
+    "blade",
+    "ui",
+    "components"
   ],
   "contributes": {
     "languages": [
@@ -48,4 +69,4 @@
     "eslint": "^8.0.0",
     "vsce": "^2.6.0"
   }
-} 
+}
