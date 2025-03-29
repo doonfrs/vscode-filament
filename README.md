@@ -7,80 +7,86 @@ A Visual Studio Code extension that provides syntax highlighting and autocomplet
 ## Features
 
 - **Syntax Highlighting**: Properly highlights Filament UI components in Blade files without showing them as errors
-- **Autocompletion**: Provides snippets for all Filament UI components with intelligent attribute suggestions
-- **Tooltips**: Displays documentation for components and attributes in tooltips
-- **Quick Start**: Begin typing `x-filament::` to see available components
-- **Icon Support**: Complete autocompletion for Filament's icon system, including all icon aliases
+- **Smart Autocompletion**: Provides context-aware suggestions for components and attributes
+- **Component Snippets**: Ready-to-use snippets for all Filament UI components with proper attribute placeholders
+- **Intelligent Attributes**: Suggests component-specific attributes with appropriate value options
+- **Documentation Tooltips**: Displays helpful documentation for components and attributes as you type
+- **Quick Start Typing**: Begin typing `<x-filament::` to see all available components
+- **Icon System Support**: Complete autocompletion for Filament's comprehensive icon system
+- **Blade Integration**: Seamlessly works with other Blade features and extensions
 
-## Support This Project
+## Autocompletion Features
 
-If you find Filament UI for VSCode useful, please consider supporting its development:
+This extension provides several types of autocompletion to improve your workflow:
 
-[![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://buymeacoffee.com/doonfrs)
+### Component Autocompletion
 
-You can also become a GitHub sponsor: [Sponsor @doonfrs](https://github.com/sponsors/doonfrs)
+- Type `<x` or `<x-filament::` to see all available Filament components
+- Automatically provides appropriate self-closing tags for components like `<x-filament::icon />`
+- Shows component documentation in tooltips when selecting components
 
-Your support will encourage me to dedicate more time to keeping this useful package updated and well-documented.
+### Attribute Autocompletion
+
+- Component-specific attributes appear automatically when typing inside a component tag
+- Common attributes like `class`, `id`, and Livewire directives are always available
+- Boolean attributes (like `disabled`) are inserted without value placeholders
+
+### Value Autocompletion
+
+- Intelligent dropdown suggestions for attribute values where appropriate
+- Predefined options for attributes like `color`, `size`, and `placement`
+- Smart handling of boolean values for attributes with `:` prefix
+
+### Icon System Autocompletion
+
+- Complete support for Filament's icon system with the following snippets:
+  - `x-filament::icon` - Base icon component
+  - `icon-panel` - Panel Builder icons
+  - `icon-form` - Form Builder icons
+  - `icon-table` - Table Builder icons
+  - `icon-notification` - Notification icons
+  - `icon-action` - Action icons
+  - `icon-infolist` - Infolist Builder icons
+  - `icon-ui` - UI Component icons
+  - `filament-svg-icon` - Template for custom SVG icons
 
 ## Supported Components
 
-This extension provides full support for Filament UI components as documented in the [official Filament documentation](https://filamentphp.com/docs/3.x/support/blade-components/overview).
+This extension supports all Filament UI components from the [official documentation](https://filamentphp.com/docs/3.x/support/blade-components/overview):
 
 ### UI Components
 
-- `x-filament::avatar` - Displays user profile images
-- `x-filament::badge` - Small colored labels for status or counts
-- `x-filament::breadcrumbs` - Navigation path showing hierarchy
-- `x-filament::icon` - Displays icons from Filament's icon system
-- `x-filament::loading-indicator` - Animated spinner for loading states
-- `x-filament::section` - Content section with optional heading
-- `x-filament::tabs` - Tabbed interface for content organization
+`x-filament::avatar` `x-filament::badge` `x-filament::breadcrumbs` `x-filament::icon` `x-filament::loading-indicator` `x-filament::section` `x-filament::tabs`
 
-### UI Components for Actions
+### Action Components
 
-- `x-filament::button` - Customizable action buttons
-- `x-filament::dropdown` - Toggleable dropdown menus
-- `x-filament::icon-button` - Icon-only buttons
-- `x-filament::link` - Styled hyperlinks
-- `x-filament::modal` - Dialog popup windows
+`x-filament::button` `x-filament::dropdown` `x-filament::icon-button` `x-filament::link` `x-filament::modal`
 
-### UI Components for Forms
+### Form Components
 
-- `x-filament::checkbox` - Checkbox input
-- `x-filament::fieldset` - Groups related form inputs
-- `x-filament::input` - Text input fields
-- `x-filament::input.wrapper` - Wrapper for form inputs
-- `x-filament::select` - Dropdown selection
+`x-filament::checkbox` `x-filament::fieldset` `x-filament::input` `x-filament::input.wrapper` `x-filament::select`
 
-### UI Components for Tables
+### Table Components
 
-- `x-filament::pagination` - Navigation for paginated data
+`x-filament::pagination`
 
-## Icon System Support
+## Usage Examples
 
-This extension provides comprehensive support for Filament's icon system:
+### Basic Component Usage
 
-- **Icon Component**: Use `x-filament::icon` with name and size attributes
-- **Icon Aliases**: Autocomplete for all icon aliases from the Filament documentation
-- **Icon Categories**: Organized snippets for different icon categories:
-  - Panel Builder icons (`icon-panel`)
-  - Form Builder icons (`icon-form`) 
-  - Table Builder icons (`icon-table`)
-  - Notifications icons (`icon-notification`)
-  - Actions icons (`icon-action`)
-  - Infolist Builder icons (`icon-infolist`)
-  - UI Component icons (`icon-ui`)
-- **Custom SVG Icons**: Template for creating custom SVG icons (`filament-svg-icon`)
+```blade
+<x-filament::button>
+    Submit Form
+</x-filament::button>
+```
 
-For the complete list of available icons, see the [Filament Icons Documentation](https://filamentphp.com/docs/3.x/support/icons).
+### Component with Attributes
 
-## Usage
-
-1. Install the extension from the VSCode marketplace
-2. Open a `.blade.php` file
-3. Start typing `x-filament::` and the autocompletion will show the available components
-4. Select a component to insert it with proper attributes and formatting
-5. Tab through the placeholders to fill in the values
+```blade
+<x-filament::button color="primary" size="lg" icon="heroicon-o-check">
+    Save Changes
+</x-filament::button>
+```
 
 ### Using Icons
 
@@ -95,6 +101,46 @@ For the complete list of available icons, see the [Filament Icons Documentation]
 <x-filament::icon name="actions::edit-action" />
 ```
 
+## Requirements
+
+- Visual Studio Code 1.75.0 or higher
+
+## Support This Project
+
+If you find Filament UI for VSCode useful, please consider supporting its development:
+
+[![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://buymeacoffee.com/doonfrs)
+
+You can also become a GitHub sponsor: [Sponsor @doonfrs](https://github.com/sponsors/doonfrs)
+
+Your support will encourage me to dedicate more time to keeping this useful package updated and well-documented.
+
+## Icon System Support
+
+This extension provides comprehensive support for Filament's icon system:
+
+- **Icon Component**: Use `x-filament::icon` with name and size attributes
+- **Icon Aliases**: Autocomplete for all icon aliases from the Filament documentation
+- **Icon Categories**: Organized snippets for different icon categories:
+  - Panel Builder icons (`icon-panel`)
+  - Form Builder icons (`icon-form`)
+  - Table Builder icons (`icon-table`)
+  - Notifications icons (`icon-notification`)
+  - Actions icons (`icon-action`)
+  - Infolist Builder icons (`icon-infolist`)
+  - UI Component icons (`icon-ui`)
+- **Custom SVG Icons**: Template for creating custom SVG icons (`filament-svg-icon`)
+
+For the complete list of available icons, see the [Filament Icons Documentation](https://filamentphp.com/docs/3.x/support/icons).
+
+## Usage
+
+1. Install the extension from the VSCode marketplace
+2. Open a `.blade.php` file
+3. Start typing `<x-filament::` and the autocompletion will show the available components
+4. Select a component to insert it with proper attributes and formatting
+5. Tab through the placeholders to fill in the values
+
 ## Intelligent Autocompletion
 
 This extension provides context-aware suggestions:
@@ -102,10 +148,6 @@ This extension provides context-aware suggestions:
 - Component-specific attributes are suggested when typing within a component tag
 - Attribute values have intelligent dropdown options where appropriate (colors, sizes, etc.)
 - Documentation is displayed in tooltips as you type
-
-## Requirements
-
-- Visual Studio Code 1.75.0 or higher
 
 ## Extension Settings
 
