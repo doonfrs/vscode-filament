@@ -103,7 +103,7 @@
       "patterns": [
         {
           "name": "meta.attribute.html",
-          "match": "(?:\\s|^)(:?)([a-zA-Z0-9_-]+)\\s*(=)",
+          "match": "(?:\\s|^)(:?)((?:wire:[\\w\\.-]+|[a-zA-Z0-9_-]+))\\s*(=)",
           "captures": {
             "1": {"name": "punctuation.definition.attribute.html"},
             "2": {"name": "entity.other.attribute-name.html"},

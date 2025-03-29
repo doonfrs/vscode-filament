@@ -17,14 +17,14 @@
             <x-filament::card>
                 <x-filament::input.wrapper>
                     <x-filament::input.label for="name">Name</x-filament::input.label>
-                    <x-filament::input wire:model="name" id="name" />
+                    <x-filament::input wire:model="name" id="name" wire:model="true" />
                     @error('name')
                         <x-filament::input.error>{{ $message }}</x-filament::input.error>
                     @enderror
                 </x-filament::input.wrapper>
                 
                 <!-- Textarea field -->
-                <x-filament::input.wrapper>
+                <x-filament::input.wrapper disabled >
                     <x-filament::input.label for="description">Description (Optional)</x-filament::input.label>
                     <x-filament::textarea wire:model="description" id="description" rows="3" />
                 </x-filament::input.wrapper>
@@ -32,7 +32,7 @@
                 <!-- Select field -->
                 <x-filament::input.wrapper>
                     <x-filament::input.label for="category">Category</x-filament::input.label>
-                    <x-filament::select wire:model="category" id="category">
+                    <x-filament::select disabled placeholder="value" wire:model="category" id="category">
                         <option value="">Select a category</option>
                         <option value="1">Category 1</option>
                         <option value="2">Category 2</option>
@@ -42,7 +42,7 @@
                 <!-- Checkbox field -->
                 <x-filament::input.wrapper>
                     <div class="flex items-center">
-                        <x-filament::checkbox wire:model="subscribe" id="subscribe" />
+                        <x-filament::checkbox wire:click="true" wire:model="subscribe" id="subscribe" />
                         <x-filament::input.label for="subscribe" class="ml-2">
                             Subscribe to newsletter
                         </x-filament::input.label>
