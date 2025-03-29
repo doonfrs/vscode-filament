@@ -31,7 +31,7 @@ function activate(context) {
                         const componentName = tag.replace('x-filament::', '');
                         
                         // Check if the component is self-closing based on name
-                        const isSelfClosing = ['input', 'avatar', 'icon-button', 'loading-indicator', 'checkbox', 'radio', 'toggle'].some(
+                        const isSelfClosing = ['input', 'avatar', 'icon-button', 'loading-indicator', 'checkbox', 'radio'].some(
                             name => tag === `x-filament::${name}` || tag.startsWith(`x-filament::${name}.`)
                         );
                         
@@ -101,7 +101,7 @@ function activate(context) {
                         const tagPrefix = hasOpeningBracket ? '' : '<';
                         
                         // Check if the component is self-closing based on name
-                        const isSelfClosing = ['input', 'avatar', 'icon-button', 'loading-indicator', 'checkbox', 'radio', 'toggle'].some(
+                        const isSelfClosing = ['input', 'avatar', 'icon-button', 'loading-indicator', 'checkbox', 'radio'].some(
                             name => componentName === `x-filament::${name}` || componentName.startsWith(`x-filament::${name} `)
                         );
                         
@@ -127,11 +127,11 @@ function activate(context) {
                         // Provide dynamic completions for component names
                         const filamentComponents = [
                             // Input components
-                            'input', 'input.wrapper', 'input.label', 'input.error',
-                            'textarea', 'select', 'checkbox', 'radio', 'toggle',
+                            'input', 'input.wrapper',
+                            'select', 'checkbox', 'radio',
                             // UI components
-                            'button', 'card', 'dropdown', 'dropdown.item', 'dropdown.list',
-                            'form', 'alert', 'badge', 'avatar', 'section',
+                            'button', 'dropdown', 'dropdown.item', 'dropdown.list',
+                            'badge', 'avatar', 'section',
                             'tabs', 'tabs.item', 'modal', 'link', 'icon-button',
                             'loading-indicator', 'fieldset', 'breadcrumbs', 'pagination'
                         ];
@@ -168,14 +168,12 @@ function activate(context) {
                         
                         // Check if the component is self-closing based on name
                         const baseName = componentName.replace('x-filament::', '');
-                        const isSelfClosing = ['input', 'avatar', 'icon-button', 'loading-indicator', 'checkbox', 'radio', 'toggle'].some(
+                        const isSelfClosing = ['input', 'avatar', 'icon-button', 'loading-indicator', 'checkbox', 'radio'].some(
                             name => baseName === name || baseName.startsWith(`${name}.`)
                         );
                         
                         if (isSelfClosing) {
                             item.insertText = new vscode.SnippetString(`${componentName} $0 />`);
-                        } else if (baseName === 'alert') {
-                            item.insertText = new vscode.SnippetString(`${componentName} type="\${1|info,success,warning,danger|}">\n    $0\n</${componentName}>`);
                         } else {
                             item.insertText = new vscode.SnippetString(`${componentName}>\n    $0\n</${componentName}>`);
                         }
@@ -245,20 +243,12 @@ function getComponentDocumentation(component) {
     const documentation = {
         'input': 'Standard input field component for collecting text data from users.',
         'input.wrapper': 'Wrapper component for inputs providing consistent styling and border.',
-        'input.label': 'Label component for form inputs with proper styling and positioning.',
-        'input.error': 'Displays validation error messages below form inputs.',
-        'textarea': 'Multi-line text input component for longer text entries.',
         'select': 'Dropdown select component for choosing from predefined options.',
         'checkbox': 'Checkbox input component for boolean selections.',
-        'radio': 'Radio button input component for single selections from a group.',
-        'toggle': 'Toggle switch component for boolean on/off selections.',
         'button': 'Button component with various styling options like color, size, and icons.',
-        'card': 'Container component with consistent styling for grouping related content.',
         'dropdown': 'Interactive dropdown menu component for displaying a list of actions.',
         'dropdown.item': 'Individual selectable item within a dropdown menu.',
         'dropdown.list': 'Container for dropdown items with consistent styling.',
-        'form': 'Form container component that handles submission and validation.',
-        'alert': 'Alert component for displaying messages with different states (info, success, warning, danger).',
         'badge': 'Small label component often used for status indicators or counters.',
         'avatar': 'Component for displaying user profile images in a circular or square format.',
         'section': 'Content section with optional heading and description.',
@@ -319,12 +309,6 @@ function getComponentAttributes(componentName) {
             attributes.push(createAttribute('tag', 'HTML tag to use', 'tag="\${1|button,a|}"'));
             attributes.push(createAttribute('href', 'URL for link buttons (when tag is "a")'));
             attributes.push(createAttribute('disabled', 'Disabled state', 'disabled'));
-            break;
-            
-        case 'alert':
-            attributes.push(createAttribute('type', 'Alert type', 'type="\${1|info,success,warning,danger|}"'));
-            attributes.push(createAttribute('icon', 'Alert icon'));
-            attributes.push(createAttribute('dismissible', 'Can be dismissed', 'dismissible'));
             break;
             
         case 'avatar':

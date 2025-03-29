@@ -52,8 +52,6 @@ This extension provides full support for Filament UI components as documented in
 - `x-filament::fieldset` - Groups related form inputs
 - `x-filament::input` - Text input fields
 - `x-filament::input.wrapper` - Wrapper for form inputs
-- `x-filament::input.label` - Labels for form inputs
-- `x-filament::input.error` - Error messages for form validation
 - `x-filament::select` - Dropdown selection
 
 ### UI Components for Tables

@@ -15,20 +15,6 @@
     ],
     "description": "Filament Input wrapper component"
   },
-  "Filament Input Label": {
-    "prefix": "x-filament::input.label",
-    "body": [
-      "<x-filament::input.label for=\"${1:id}\">${2:Label}</x-filament::input.label>"
-    ],
-    "description": "Filament Input Label component"
-  },
-  "Filament Input Error": {
-    "prefix": "x-filament::input.error",
-    "body": [
-      "<x-filament::input.error>{{ \\$${1:message} }}</x-filament::input.error>"
-    ],
-    "description": "Filament Input Error component"
-  },
   "Filament Button": {
     "prefix": "x-filament::button",
     "body": [
@@ -253,20 +239,6 @@
       "</x-filament::input.wrapper"
     ],
     "description": "Filament Input wrapper component"
-  },
-  "<Filament Input Label": {
-    "prefix": "<x-filament::input.label",
-    "body": [
-      "<x-filament::input.label for=\"${1:id}\">${2:Label}</x-filament::input.label"
-    ],
-    "description": "Filament Input Label component"
-  },
-  "<Filament Input Error": {
-    "prefix": "<x-filament::input.error",
-    "body": [
-      "<x-filament::input.error>{{ \\$${1:message} }}</x-filament::input.error"
-    ],
-    "description": "Filament Input Error component"
   },
   "<Filament Button": {
     "prefix": "<x-filament::button",

@@ -93,6 +93,7 @@
             </x-filament::link>
         </div>
 
+
         <!-- Tabs component -->
         <div class="mt-4">
             <x-filament::tabs>
@@ -139,27 +140,6 @@
             <code>
                 &lt;x-filament::pagination :paginator="$records" extreme-links /&gt;
             </code>
-        </div>
-
-        <!-- Fieldset component -->
-        <div class="mt-4">
-            <x-filament::fieldset>
-                <x-slot name="label">
-                    Contact Information
-                </x-slot>
-                
-                <div class="space-y-4">
-                    <x-filament::input.wrapper>
-                        <x-filament::input.label for="email">Email</x-filament::input.label>
-                        <x-filament::input type="email" id="email" />
-                    </x-filament::input.wrapper>
-                    
-                    <x-filament::input.wrapper>
-                        <x-filament::input.label for="phone">Phone</x-filament::input.label>
-                        <x-filament::input type="tel" id="phone" />
-                    </x-filament::input.wrapper>
-                </div>
-            </x-filament::fieldset>
         </div>
 
         <!-- Loading indicator component -->
