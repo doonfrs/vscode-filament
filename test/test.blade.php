@@ -13,20 +13,8 @@
         <x-filament::avatar src="https://example.com/image.jpg" alt="Description" size="sm" :circular="true">
         <x-filament::avatar src="https://example.com/image.jpg" alt="Description" size="sm" :circular="true">
 
-        <x-filament::alert type="info">
-            
-        </x-filament::alert>
-
-            
-        </x-filament::alert>
-        
-        <x-filament::alert src="https://example.com/image.jpg" alt="test">
-        
-        </x-filament::alert>
         <x-filament::form wire:submit="save">
             <x-filament::card>
-                <!-- Input field with label and error -->
-                </x-filament::input.wrapper>>
                 <x-filament::input.wrapper>
                     <x-filament::input.label for="name">Name</x-filament::input.label>
                     <x-filament::input wire:model="name" id="name" />
